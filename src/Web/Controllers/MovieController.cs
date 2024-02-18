@@ -22,19 +22,18 @@ public class MovieController : ControllerBase
         _movieService = movieService;
     }
 
-    ///// <summary>
-    ///// Retrieve a list of movies.
-    ///// </summary>
-    ///// <returns>List of movies.</returns>
-    ///// 
-    //[HttpGet("movies")]
-    //[ProducesResponseType(typeof(IEnumerable<RateResponse>), StatusCodes.Status200OK)]
-    //[ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-    //[ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
-    //public async Task<IActionResult> Get()
-    //{
-    //    return Ok(await _rateService.Get());
-    //}
+    /// <summary>
+    /// Retrieve a list of movies.
+    /// </summary>
+    /// <returns>List of movies.</returns>
+    /// 
+    [HttpGet("movies")]
+    [ProducesResponseType(typeof(GetAllMoviesResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Get()
+    {
+        return Ok(await _movieService.GetMovies());
+    }
 
     /// <summary>
     /// Adds a movie to Movie database.
@@ -42,38 +41,26 @@ public class MovieController : ControllerBase
     /// <returns>A movie that was created.</returns>
     /// 
     [HttpPost("movies")]
-    [ProducesResponseType(typeof(IEnumerable<RateResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(IEnumerable<InsertRateResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Insert(InsertMovieRequest request)
     {
         return Created("/v1/movies", await _movieService.Insert(request));
     }
 
-    ///// <summary>
-    ///// Retrieve a single movie by its id with average rating and comments.
-    ///// </summary>
-    ///// <returns>Movie by id.</returns>
-    ///// 
-    //[HttpGet("movies/{id}")]
-    //[ProducesResponseType(typeof(IEnumerable<RateResponse>), StatusCodes.Status200OK)]
-    //[ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-    //[ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
-    //public async Task<IActionResult> Get(int id)
-    //{
-    //    return Ok(await _rateService.Get(id));
-    //}
-
     /// <summary>
-    /// Retrieve a list of movies.
+    /// Retrieve a single movie by its id with average rating and comments.
     /// </summary>
-    /// <returns>List of movies.</returns>
+    /// <returns>Movie by id.</returns>
     /// 
-    [HttpGet("comments")]
-    [ProducesResponseType(typeof(IEnumerable<CommentEntity>), StatusCodes.Status200OK)]
+    [HttpGet("movies/{id}")]
+    [ProducesResponseType(typeof(GetMovieByIdResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Get()
+    public async Task<IActionResult> Get(int id)
     {
-        return Ok(await _movieService.GetComments());
+        return Ok(await _movieService.Get(id));
     }
+
+
 }

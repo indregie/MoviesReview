@@ -8,7 +8,7 @@ SET search_path TO public;
 CREATE TABLE rates (
     id SERIAL PRIMARY KEY,
     movie_id INT NOT NULL REFERENCES movies(id),
-    rate NUMERIC NOT NULL
+    rate INT NOT NULL
 );
 
 -- rollback DROP TABLE IF EXISTS rates;

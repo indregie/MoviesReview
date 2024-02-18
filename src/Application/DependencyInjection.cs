@@ -10,5 +10,6 @@ public static class DependencyInjection
     {
         services.AddScoped<RateService>();
         services.AddScoped<MovieService>();
+        services.AddScoped<CommentService>();
     }
 }

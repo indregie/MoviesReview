@@ -9,5 +9,5 @@ namespace Domain.Dtos.Response;
 public class InsertMovieResponse
 {
     public int Id { get; set; }
-    public string Name { get; set; }
+    public string Name { get; set; } = string.Empty;
 }

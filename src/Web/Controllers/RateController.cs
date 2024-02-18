@@ -1,4 +1,5 @@
 ﻿using Application.Services;
+using Domain.Dtos.Request;
 using Domain.Dtos.Response;
 using Infrastructure.Errors;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +10,7 @@ namespace Web.Controllers;
 /// Represents the API for managing rates.
 /// </summary>
 [ApiController]
-public class RateController : Controller
+public class RateController : ControllerBase
 {
     private RateService _rateService;
     /// <summary>
@@ -21,16 +22,15 @@ public class RateController : Controller
     }
 
     /// <summary>
-    /// Retrieve a list of currencies for a given day along with their differences in exchange rates compared to the previous day. The specified day should not be later than December 31, 2014.
+    ///  Rate a movie
     /// </summary>
-    /// <returns>List of currencies with rates (based on Litas).</returns>
+    /// <returns> Rating created. </returns>
     /// 
-    [HttpGet("rates")]
-    [ProducesResponseType(typeof(IEnumerable<RateResponse>), StatusCodes.Status200OK)]
+    [HttpPost("rates")]
+    [ProducesResponseType(typeof(IEnumerable<InsertRateResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Get([FromQuery] DateTime date)
+    public async Task<IActionResult> Insert(InsertRateRequest request)
     {
-        return Ok();
+        return Created("/v1/rates", await _rateService.Insert(request));
     }
 }

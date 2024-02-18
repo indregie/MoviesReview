@@ -7,10 +7,7 @@ SET search_path TO public;
 -- comment: Create movies table
 CREATE TABLE movies (
     id SERIAL PRIMARY KEY,
-    name VARCHAR NOT NULL,
-    average_rate NUMERIC
+    name VARCHAR NOT NULL
 );
-
-CREATE INDEX idx_average_rate ON movies (average_rate);
  
 -- rollback DROP TABLE IF EXISTS movies;

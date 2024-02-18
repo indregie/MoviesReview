@@ -31,12 +31,15 @@ public class ErrorHandlerMiddleware
 
             switch (error)
             {
-                case RatesNotFoundException e:
+                case MovieNotFoundException e:
                     response.StatusCode = (int)HttpStatusCode.NotFound;
                     break;
-                //case InsufficientFundsException e:
-                //    response.StatusCode = (int)HttpStatusCode.BadRequest;
-                //    break;
+                case InvalidNameException e:
+                    response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    break;
+                case InvalidRateException e:
+                    response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    break;
                 default:
                     // unhandled error
                     _logger.LogError(error, error.Message);
