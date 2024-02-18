@@ -43,6 +43,7 @@ public class RateService
 
     public async Task<decimal> CountAverage(int movieId)
     {
-        return await _rateRepository.CountAverage(movieId);
+        decimal rate = await _rateRepository.CountAverage(movieId);
+        return rate;
     }
 }

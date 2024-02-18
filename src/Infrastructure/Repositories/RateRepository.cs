@@ -1,8 +1,8 @@
 ﻿using Dapper;
-using Domain.Dtos.Response;
 using Domain.Entities;
 using Domain.Interfaces;
 using System.Data;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Infrastructure.Repositories;
 
@@ -34,9 +34,10 @@ public class RateRepository : IRateRepository
     {
         string sql = @"SELECT AVG(rate) 
                         FROM rates 
-                        WHERE movie_id = @MovieId;";
+                        WHERE movie_id = @MovieId"
+        ;
 
-        return await _connection.QuerySingleOrDefaultAsync<decimal>(sql);
+        return await _connection.QuerySingleOrDefaultAsync<decimal>(sql, new { MovieId = movieId });
     }
 
 }

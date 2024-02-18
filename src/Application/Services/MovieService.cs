@@ -10,9 +10,13 @@ namespace Application.Services;
 public class MovieService
 {
     private readonly IMovieRepository _movieRepository;
-    public MovieService(IMovieRepository movieRepository)
+    private readonly RateService _rateService;
+    private readonly CommentService _commentService;
+    public MovieService(IMovieRepository movieRepository, RateService rateService, CommentService commentService)
     {
         _movieRepository = movieRepository;
+        _rateService = rateService;
+        _commentService = commentService;
     }
 
     public async Task<GetAllMoviesResponse> GetMovies()
@@ -56,9 +60,17 @@ public class MovieService
         MovieEntity? movieResult = await _movieRepository.Get(id)
            ?? throw new MovieNotFoundException();
 
+        decimal rateResult = await _rateService.CountAverage(id);
+        IEnumerable<CommentEntity> commentsResult = await _commentService.GetComments(id);
 
-
-
-        return null;
+        GetMovieByIdResponse response = new GetMovieByIdResponse()
+        {
+            Id = movieResult.Id,
+            Name = movieResult.Name,
+            AverageRating = rateResult,
+            Comments = commentsResult.ToList()
+        };
+        
+        return response;
     }
 }

@@ -1,9 +1,5 @@
-﻿using Domain.Dtos.Request;
-using Domain.Dtos.Response;
-using Domain.Entities;
-using Domain.Exceptions;
+﻿using Domain.Entities;
 using Domain.Interfaces;
-using Infrastructure.Repositories;
 
 namespace Application.Services;
 
@@ -21,16 +17,16 @@ public class CommentService
         return comments;
     }
 
-    //public async Task<GetAllMoviesResponse> GetMovies()
-    //{
-    //    IEnumerable<MovieEntity> result = await _movieRepository.GetMovies();
+    public async Task<IEnumerable<CommentEntity>> GetComments(int movieId)
+    {
+        IEnumerable<CommentEntity> comments = await _client.Get();
 
-    //    GetAllMoviesResponse response = new GetAllMoviesResponse()
-    //    {
-    //        Movies = result.Select(m => new InsertMovieResponse { Id = m.Id, Name = m.Name })
-    //        .ToList()
-    //    };
-    //    return response;
-    //}
+        var random = new Random();
+        IEnumerable<CommentEntity> movieComments = comments
+            .Where(c => c.PostId == movieId)
+            .OrderBy(_ => random.Next())
+            .Take(5);
 
+        return movieComments;
+    }
 }

@@ -1,12 +1,18 @@
-**Welcome to MoviesRatesAPI.**
 
-This API is designed to allow you to observe the difference in currency exchange rates between the provided date and one day prior. 
-The base currency is the Lithuanian Litas, so the dates you can provide are only before December 21, 2014.
+# Movie API
 
-This API was created using .NET Core and a PostgreSQL database.
+## Overview
+This API provides endpoints for managing movie data.
 
-Instructions on how to run it:
+## Prerequisites
+- Docker
+- Docker Compose
 
-1. Suggest you to run it with docker-compose, thus you will have database set and all migrations ran for you.
-1'. Sure you can run it otherwise, just don't forget to manually create movies database and run migrations/sql scripts.
-2. After you have it all set, you can enjoy testing my API with Postman collections that I prepared for you.
+## Usage
+### Postman Collections
+- Import the provided Postman collection to test API endpoints.
+- Set up environment variables for base URLs, authentication, etc.
+
+### API Endpoints
+- **GET /movies:** Retrieve a list of movies.
+- **POST /movies:** Add a new movie.
