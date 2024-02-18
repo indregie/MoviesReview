@@ -1,4 +1,5 @@
 ﻿using Application.Services;
+using Domain.Dtos.Request;
 using Domain.Dtos.Response;
 using Domain.Entities;
 using Infrastructure.Errors;
@@ -43,10 +44,9 @@ public class MovieController : ControllerBase
     [HttpPost("movies")]
     [ProducesResponseType(typeof(IEnumerable<RateResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Insert(int id)
+    public async Task<IActionResult> Insert(InsertMovieRequest request)
     {
-        return Ok();
+        return Created("/v1/movies", await _movieService.Insert(request));
     }
 
     ///// <summary>
